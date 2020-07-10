@@ -1,0 +1,22 @@
+[{
+  "name": "SEM HR115C6-88S",
+  "windingResistance": 1.7,
+  "torqueConstant": 1.02,
+  "peakTorque": 22.0,
+  "stallTorque": 6.8,
+  "voltage": 48,
+  "image": "https://www.picclickimg.com/d/l400/pict/392307974828_/Sem-Servo-Motors-Hd142C6-88S-Hd142C688S-New-No.jpg",
+  "defaultPIDs" : [800,1500,2000,50],
+  "tested" : true
+},
+{
+  "name": "MiGE 130ST-M10010",
+  "windingResistance": 1.01,
+  "torqueConstant": 2.2,
+  "peakTorque": 20.0,
+  "stallTorque": 10.0,
+  "voltage": 48,
+  "image": "https://sc01.alicdn.com/kf/HTB1WFYnXLvsK1Rjy0Fiq6zwtXXa7.jpg",
+  "defaultPIDs" : [800,1500,2000,50],
+  "tested" : true
+}]
