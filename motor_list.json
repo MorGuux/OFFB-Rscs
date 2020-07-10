@@ -5,7 +5,7 @@
   "peakTorque": 22.0,
   "stallTorque": 6.8,
   "voltage": 48,
-  "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/motor_images/MiGE-130ST-M10010.png",
+  "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/motor_images/SEM-HR115C6-88S.png",
   "defaultPIDs" : [800,1500,2000,50],
   "tested" : true
 },
@@ -16,7 +16,7 @@
   "peakTorque": 20.0,
   "stallTorque": 10.0,
   "voltage": 48,
-  "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/motor_images/SEM-HR115C6-88S.png",
+  "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/motor_images/MiGE-130ST-M10010.png",
   "defaultPIDs" : [800,1500,2000,50],
   "tested" : true
 }]
