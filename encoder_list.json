@@ -1,0 +1,8 @@
+[{
+  "name": "Heidenhain EQN1325",
+  "encoderType": 1,
+  "ppr": 8192,
+  "voltage": 5,
+  "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/encoder_images/eqn1325.png",
+  "tested": true
+}]
