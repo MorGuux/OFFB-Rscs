@@ -8,7 +8,7 @@
 },
 {
   "name": "CUI AMT103",
-  "encoderType": 1,
+  "encoderType": 0,
   "ppr": 4096,
   "voltage": 5,
   "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/encoder_images/CUI%20AMT103.png",
@@ -16,7 +16,7 @@
 },
 {
   "name": "CUI AMT132",
-  "encoderType": 1,
+  "encoderType": 0,
   "ppr": 4096,
   "voltage": 5,
   "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/encoder_images/AMT13.png",
