@@ -5,4 +5,28 @@
   "voltage": 5,
   "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/encoder_images/eqn1325.png",
   "tested": true
+},
+{
+  "name": "CUI AMT103",
+  "encoderType": 1,
+  "ppr": 4096,
+  "voltage": 5,
+  "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/encoder_images/CUI%20AMT103.png",
+  "tested": true
+},
+{
+  "name": "CUI AMT132",
+  "encoderType": 1,
+  "ppr": 4096,
+  "voltage": 5,
+  "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/encoder_images/AMT13.png",
+  "tested": true
+},
+{
+  "name": "Omron E6B2CWZ6C",
+  "encoderType": 0,
+  "ppr": 1200,
+  "voltage": 5,
+  "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/encoder_images/E6B2CWZ6C.png",
+  "tested": true
 }]
