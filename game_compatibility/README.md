@@ -1,5 +1,5 @@
-Game compatibility files
+# Game compatibility files
 
-Currently supported
+### Currently supported
 
-- DiRT Rally 2.0
+* DiRT Rally 2.0
