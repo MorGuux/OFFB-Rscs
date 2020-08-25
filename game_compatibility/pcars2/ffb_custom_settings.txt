@@ -1,0 +1,128 @@
+######################################################
+# NAME: Christiaan's Pure FFB v1.06 - DIRECT DRV + LSS + STDFX
+
+# Spindle Scales -------------------------------------
+(Fx_scale 1.0)
+(Fy_scale (* tone 2.0))
+(Fz_scale 1.0)
+(Mx_scale 1.0)
+(My_scale 1.0)
+(Mz_scale (* (+ (* tone -1.0) 1.0) 2.0))
+
+# Spindle Arm ----------------------------------------
+(arm_angle 15.0)
+(left_scale (linkage 1.0 -1.0))
+(right_scale (linkage 1.0 1.0))
+
+(left_scale (* 1.0 volume left_scale))
+(right_scale (* 1.0 volume right_scale))
+
+# Rack -----------------------------------------------
+(Fx (+ (* left_scale FL_Fx) (* right_scale FR_Fx)))
+(Fy (+ (* left_scale FL_Fy) (* right_scale FR_Fy)))
+(Fz (+ (* left_scale FL_Fz) (* right_scale FR_Fz)))
+(Mx (+ (* left_scale FL_Mx) (* right_scale FR_Mx)))
+(My (+ (* left_scale FL_My) (* right_scale FR_My)))
+(Mz (+ (* left_scale FL_Mz) (* right_scale FR_Mz)))
+(output (+ (* Fx_scale Fx) (* Fy_scale Fy) (* Fz_scale Fz) (* Mx_scale Mx) (* My_scale My) (* Mz_scale Mz) ) )
+
+# Jerk Based Road Feel -------------------------------
+(FL_road (* FL_load 1.0))
+(FL_road (jerk FL_road))
+(FL_road (* FL_road (abs FL_angvel)))
+
+(FR_road (* FR_load -1.0))
+(FR_road (jerk FR_road))
+(FR_road (* FR_road (abs FR_angvel)))
+
+(FL_brk (* FL_long 1.0))
+(FL_brk (jerk FL_brk))
+(FL_brk (* FL_brk (abs FL_angvel)))
+
+(FR_brk (* FR_long -1.0))
+(FR_brk (jerk FR_brk))
+(FR_brk (* FR_brk (abs FR_angvel)))
+
+(FL_crnr (* FL_lat 1.0))
+(FL_crnr (jerk FL_crnr))
+(FL_crnr (* FL_crnr (abs FL_angvel)))
+
+(FR_crnr (* FR_lat -1.0))
+(FR_crnr (jerk FR_crnr))
+(FR_crnr (* FR_crnr (abs FR_angvel)))
+
+# Bump -----------------------------------------------
+(FL_bump_period (+ (* 0.4 FL_bump_kerb) (* 0.1 FL_bump_track)))
+(FL_bump_amplitude (+ (* 0.2 FL_bump_kerb) (* 0.06 FL_bump_track)))
+(FL_bump_sharpness 0.99)
+(inv_period (/ 1.0 (+ FL_bump_period 0.001)))
+(dphase (* FL_vel_x dt inv_period))
+(FL_bump (oscillator dphase))
+(FL_bump (scoop FL_bump FL_bump_sharpness 0.99))
+(FL_bump (* FL_bump FL_load FL_bump_amplitude FL_angvel))
+#(FL_bump (split FL_bump 0.0 1.0 0.0 0.4 0.02))
+
+(FR_bump_period (+ (* 0.4 FR_bump_kerb) (* 0.1 FR_bump_track)))
+(FR_bump_amplitude (+ (* 0.2 FR_bump_kerb) (* 0.06 FR_bump_track)))
+(FR_bump_sharpness 0.99)
+(inv_period (/ 1.0 (+ FR_bump_period 0.001)))
+(dphase (* FR_vel_x dt inv_period))
+(FR_bump (oscillator dphase))
+(FR_bump (scoop FR_bump FR_bump_sharpness 0.99))
+(FR_bump (* FR_bump FR_load FR_bump_amplitude FR_angvel))
+#(FR_bump (split FR_bump 0.0 1.0 0.0 0.4 0.02))
+
+# Scrub ----------------------------------------------
+(FL_scrub (soft_clip FL_scrub 2.0 0.0))
+(FL_scrub (scoop FL_scrub 0.8 0.999))
+(FL_scrub (* FL_scrub (oscillator 1.2)))
+(FR_scrub (soft_clip FR_scrub 2.0 0.0))
+(FR_scrub (scoop FR_scrub 0.8 0.999))
+(FR_scrub (* FR_scrub (oscillator 1.2)))
+
+
+# Texture --------------------------------------------
+(road_scale (* 0.00004))
+(brk_scale (* 0.0002))
+(bump_scale (* 0.12))
+(scrub_scale (* 14.0 0.0))
+
+(FL_tex (+ (* road_scale FL_road) (* brk_scale FL_brk) (* brk_scale FL_crnr) (* bump_scale FL_bump) (* scrub_scale FL_scrub)))
+(FR_tex (+ (* road_scale FR_road) (* brk_scale FR_brk) (* brk_scale FR_crnr) (* bump_scale FR_bump) (* scrub_scale FR_scrub)))
+
+(tex (+ FL_tex FR_tex))
+(tex (* tex track_road_noise device_road_noise))
+
+(tex (soft_clip tex 1.0 0.0))
+
+# Engine ---------------------------------------------
+(engine (oscillator (* throttle crankshaft 0.0006)))
+(engine (split engine 0.0 1.0 0.0 0.1 0.02))
+
+# Gearbox --------------------------------------------
+(gearbox (oscillator (* (abs (- driveshaft_core clutchshaft_core)) 1.0)))
+(gearbox (* gearbox gearbox_grind clutch 0.05))
+(gearbox (spring gearbox 40000.0 0.2 1.0))
+(gearbox (* gearbox 0.15))
+
+(feel (+ tex gearbox))
+(feel (spring feel device_filter_stiffness 0.4 1.0))
+
+(output (+ output (* feel fx)))
+
+# Low Speed Smoothing -------------------------------
+(fast_scale (crossover vel_mag 0.0 1.0))
+(slow_output (smooth output 0.2))
+(slow_output (drag slow_output 0.0001 0.0))
+(output (+ (* fast_scale output) (* (- 1.0 fast_scale) slow_output)))
+
+# FFB Histogram -------------------------------------
+(histogram output)
+
+# Output --------------------------------------------
+(output (hard_clip (* output gain) 1.0))
+
+# Lock Stops ----------------------------------------
+(stops (bumpstop output 0.05 2.0 0.05 0.0))
+(output (+ output (* stops device_lock_stop)))
+
