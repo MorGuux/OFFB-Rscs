@@ -1,0 +1,10 @@
+[{
+  "name": "G27 Shifter",
+  "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/peripheral_images/g27-shifter.png",
+  "tested" : true
+},
+{
+  "name": "Generic Pedals",
+  "image": "https://raw.githubusercontent.com/MorGuux/OFFB-Rscs/master/peripheral_images/generic-pedals.png",
+  "tested" : false
+}]
